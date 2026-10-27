@@ -1,0 +1,105 @@
+Para conectar um botão do seu arquivo HTML (index.html) a um script Python (.py), você não pode chamá-lo diretamente como faria com um arquivo JavaScript, pois o navegador não executa Python nativamente.
+A forma correta e padrão no desenvolvimento web é criar uma API/Servidor Web em Python usando frameworks leves como Flask ou Django. O seu botão no HTML fará uma requisição (via formulário ou JavaScript/Fetch) para uma rota desse servidor, que por sua vez executará o seu script de transformação de imagem.
+Como você já possui experiência com Flask, aqui está a estrutura mais simples e direta de como implementar isso: [1] (https://mail.google.com/mail/?extsrc=sync&client=h&plid=ACUX6DPdMQJjiCBjFMkN42ZX0TcdkwpEiYEfF_M)
+
+1. O arquivo Backend em Python (app.py)
+
+Crie um servidor Flask com uma rota que recebe o comando do botão e executa a lógica da API do GTA.
+python
+from flask import Flask, render_template, jsonify, request
+import requests  # ou replicate se for usar a biblioteca do Replicate
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    # Renderiza a sua página index.html que deve estar dentro de uma pasta chamada 'templates'
+    return render_template('index.html')
+
+@app.route('/transformar-imagem', methods=['POST'])
+def transformar_imagem():
+    try:
+        # 1. Aqui você coloca a lógica da API que conversamos antes (Replicate ou Stability AI)
+        # Exemplo simples simulando o retorno:
+        url_imagem_gta = "https://link-da-imagem-gerada-pela-ia.com"
+        
+        # 2. Retorna a resposta para o frontend em formato JSON
+        return jsonify({"success": True, "gta_image_url": url_imagem_gta})
+    
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+Use o código com cuidado.
+
+2. O arquivo Frontend (templates/index.html)
+
+No seu HTML, use JavaScript (Fetch API) no evento de clique do botão para disparar a requisição assíncrona para a rota do Flask. Isso evita que a página precise dar um "recarregar" completo.
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador Estilo GTA</title>
+</head>
+<body>
+
+    <h1>Transforme sua Imagem no Estilo GTA</h1>
+    
+    <!-- Botão que vai disparar a função -->
+    <button id="btnTransformar">Transformar Imagem</button>
+
+    <!-- Local onde o resultado vai aparecer -->
+    <div id="resultado" style="margin-top: 20px;"></div>
+
+    <script>
+        document.getElementById('btnTransformar').addEventListener('click', function() {
+            // Avisa o usuário que o processo começou
+            const divResultado = document.getElementById('resultado');
+            divResultado.innerHTML = "<p>Processando imagem... Aguarde.</p>";
+
+            // Faz a chamada para a rota do Flask usando POST
+            fetch('/transformar-imagem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Se deu certo, exibe a imagem retornada pelo script Python
+                    divResultado.innerHTML = `<img src="${data.gta_image_url}" alt="Imagem Estilo GTA" style="max-width: 500px;">`;
+                } else {
+                    divResultado.innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                divResultado.innerHTML = `<p style="color: red;">Erro ao conectar com o servidor.</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
+Use o código com cuidado.
+
+🗂️ Estrutura de Pastas Obrigatória
+
+Para o Flask funcionar perfeitamente, organize seus arquivos exatamente assim no seu diretório de projeto:
+text
+meu_projeto/
+│
+├── app.py               # Seu script Flask principal
+└── templates/
+    └── index.html       # Seu arquivo HTML
+Use o código com cuidado.
+
+🚀 Como Rodar
+
+1. Certifique-se de ter o Flask instalado (pip install flask requests).
+2. Execute o servidor pelo terminal: python app.py.
+3. Abra o navegador no endereço indicado (geralmente http://127.0.0).
+4. Ao clicar no botão, o JavaScript chamará silenciosamente o seu método Python, rodará a lógica e atualizará a tela com a imagem GTA criada.
+Se você precisar enviar um arquivo de imagem selecionado pelo usuário através do botão (usando um campo <input type="file">), me avise para eu te mostrar como capturar o arquivo com o FormData no JavaScript e como recebê-lo com request.files no Python!

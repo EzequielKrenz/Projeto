@@ -15,21 +15,21 @@
     <img class="personagem" src="lucia.png" alt="Lucia, personagem do jogo GTA-IV">
 
     <div class="textos">
-        <p class="descricao">Selecione as opções <br> dos jogadores</p>
+        <p class="descricao">Escolha seu <br> personagem</p>
         <h1>Não é só <br> um jogo</h1>
-        <p class="texto-apoio">Escolha seu personagem, ou tranforme uma foto sua em um personagem.</p>
+        <p class="texto-apoio">Escolha seu personagem, ou crie o seu.</p>
     </div>
     <div class="menu">
-        <img onclick="escolherPersonagem('Lucia', 'lucia.png')" class="avatar" src="lucia.png" alt="Selecionar Lucia">
-        <img onclick="escolherPersonagem('Jason', 'jason.png')" class="avatar" src="jason.png" alt="Selecionar Jason">
-        <img onclick="escolherPersonagem('CJ', 'cj.png')" class="avatar" src="cj.png" alt="Selecionar CJ">
-        <button class="voce">Escolher</button>
+        <img onclick="escolherPersonagem('Lucia', 'lucia.png', '#ff3cac')"class="avatar" src="lucia.png" alt="Selecionar Lucia">
+        <img onclick="escolherPersonagem('Jason', 'jason.png', '#00a8ff')"class="avatar" src="jason.png" alt="Selecionar Jason">
+        <img onclick="escolherPersonagem('CJ', 'cj.png', '#fBB913')"class="avatar" src="cj.png" alt="Selecionar CJ">
+        <button class="voce" type="button">Escolher</button>
+        <input class="entrada-imagem" type="file" accept="image/*" aria-label="Escolha uma foto para transformar">
+        <p class="status-geracao" role="status" aria-live="polite"></p>
     </div>
-    <div class="">
-        
+    <div class="imagem-canto">
+        <img class="imagem" src="#.png" alt="Imagem do jogo GTA-IV">
     </div>
-    <footer>
-        <p>© 2026 GTA - Todos os direitos reservados</p>
     <script src="Script.js">
     </script>
 </body>

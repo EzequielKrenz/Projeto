@@ -91,3 +91,25 @@ h1 {
     padding: 20px;
     border-radius: 50%;
 }
+
+.voce:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.entrada-imagem {
+    display: none;
+}
+
+.status-geracao {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    width: min(90vw, 600px);
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-family: "Fjalla One", sans-serif;
+    font-size: 16px;
+    text-align: center;
+    text-shadow: 1px 1px 3px #000000;
+}
